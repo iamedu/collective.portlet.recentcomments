@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<portlets>
+
+ <!-- Portlet type registrations -->
+
+ <portlet
+   addview="collective.portlet.recentcomments.Recent comments portlet"
+   title="Recent comments portlet"
+   description="Recent comments portlet"
+   />
+
+</portlets>
