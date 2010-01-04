@@ -1,4 +1,0 @@
-Introduction
-============
-
-Recent comments portlet
