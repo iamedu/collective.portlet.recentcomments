@@ -1,0 +1,36 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.portlet.recentcomments">
+
+    <five:registerPackage package="." initialize=".initialize" />
+
+    <genericsetup:registerProfile
+       name="default"
+       title="Recent Comments"
+       directory="profiles/default"
+       description="Recent Comment Portlet"
+       provides="Products.GenericSetup.interfaces.EXTENSION"
+       />
+
+     <!-- Register the portlet -->
+
+     <!-- If the portlet has no configurable parameters, you can remove
+          the EditForm declaration in recentcommentsportlet.py and delete
+          the 'editview' attribute from this statement.
+       -->
+
+     <plone:portlet
+         name="collective.portlet.recentcomments.RecentCommentsPortlet"
+         interface=".recentcommentsportlet.IRecentCommentsPortlet"
+         assignment=".recentcommentsportlet.Assignment"
+         view_permission="zope2.View"
+         edit_permission="cmf.ManagePortal"
+         renderer=".recentcommentsportlet.Renderer"
+         addview=".recentcommentsportlet.AddForm"
+         editview=".recentcommentsportlet.EditForm"
+         />
+
+</configure>
