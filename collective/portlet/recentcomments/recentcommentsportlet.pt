@@ -3,18 +3,18 @@
 
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
-        Header
+        Comentarios
         <span class="portletTopRight"></span>
     </dt>
 
     <dd class="portletItem odd">
-        Body text
+        <div tal:repeat="comment view/comments">
+	    <div>
+		    <span tal:content="comment/comment/title"/>
+                    <p tal:content="comment/comment/text"/>
+	    </div>
+	</div>
     </dd>
 
-    <dd class="portletFooter">
-        <span class="portletBottomLeft"></span>
-        Footer
-        <span class="portletBottomRight"></span>
-    </dd>
 
 </dl>

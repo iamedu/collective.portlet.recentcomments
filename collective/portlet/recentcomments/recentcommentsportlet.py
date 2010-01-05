@@ -9,6 +9,8 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.portlet.recentcomments import RecentCommentsPortletMessageFactory as _
 
+from Products.CMFCore.utils import getToolByName
+
 
 class IRecentCommentsPortlet(IPortletDataProvider):
     """A portlet
@@ -56,6 +58,10 @@ class Assignment(base.Assignment):
         return "Recent Comments"
 
 
+def get_key(element):
+    return element["time"]
+
+
 class Renderer(base.Renderer):
     """Portlet renderer.
 
@@ -65,6 +71,27 @@ class Renderer(base.Renderer):
     """
 
     render = ViewPageTemplateFile('recentcommentsportlet.pt')
+
+    def comments(self):
+	number = 5
+	urltool = getToolByName(self.context, 'portal_url')
+	portal  = urltool.getPortalObject()
+	comment_sections = []
+	comments = []
+	catalog = getToolByName(portal, 'portal_catalog')
+	news = catalog.searchResults(portal_type="News Item")
+	for new in news:
+	    path = new.getPath()
+	    obj  = new.getObject()
+	    if hasattr(obj, 'talkback'):
+	        comment_sections += [(path,obj.talkback)]
+	for sect in comment_sections:
+	    path, obj = sect
+	    for time, c in obj.objectItems():
+                comments += [{'time':time,'comment':c,'url':path}]
+	comments = sorted(comments, key=get_key)
+	comments = comments[:5]
+	return comments
 
 
 class AddForm(base.AddForm):
